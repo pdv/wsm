@@ -26,6 +26,6 @@ Noisy.prototype = Object.create(WSM.prototype);
 
 Noisy.prototype.draw = function(container) {
   var ui = new WSM_UI(container, 150, 250);
-  //ui.addTextLabel("NOISY", 100, 100);
-  //ui.addKnob()/;
+  ui.addLabel('noisy', 40, 30, '24pt', 'Helvetica Neue');
+  ui.addKnob(this.params.amount, 30, 100, 100, 100);
 }

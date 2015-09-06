@@ -29,6 +29,7 @@ WSM.prototype.getParam = function(name) {
   return this.params[name].value;
 }
 
+
 /*
  * WSM.Script
  */
