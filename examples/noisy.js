@@ -6,17 +6,26 @@
 
 function Noisy(ctx) {
   WSM.call(this, ctx);
-  var transform = new WSM.Script(ctx, this.transformer)
-  this.input = this.output = transform;
+  this.addParam('amount', 'Amount', 10, 0, 100);
+  var that = this;
+  var transform = new WSM.Script(ctx, function(inputBuffer, outputBuffer) {
+    for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+      var inputData = inputBuffer.getChannelData(channel);
+      var outputData = outputBuffer.getChannelData(channel);
+      for (var sample = 0; sample < inputBuffer.length; sample++) {
+        if (inputData[sample]) {
+          var noise = ((Math.random() * 2) - 1) * (that.getParam('amount') / 1000.0);
+          outputData[sample] = inputData[sample] + noise;
+        }
+      }
+    }
+  });
+  this.input = this.output = transform.output;
 }
-
-Noisy.transformer = function(inputBuffer, outputBuffer) {
-  var inputData = inputBuffer.getChannelData(channel);
-  var outputData = outputBuffer.getChannelData(channel);
-  for (var sample = 0; sample < inputBuffer.length; sample++) {
-    var noise = ((Math.random() * 2) - 1) * 0.2;
-    outputData[sample] = inputData[sample] + noise;
-  }
-}
-
 Noisy.prototype = Object.create(WSM.prototype);
+
+Noisy.prototype.draw = function(container) {
+  var ui = new WSM_UI(container, 150, 250);
+  //ui.addTextLabel("NOISY", 100, 100);
+  //ui.addKnob()/;
+}

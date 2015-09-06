@@ -10,17 +10,30 @@
 var WSM = function(ctx) {
   this.input = ctx.createGain();
   this.output = ctx.createGain();
-  input.connect(output);
-  this.params = {}
+  this.input.connect(this.output);
+  this.params = {};
   this.chain = [];
 }
 
+WSM.prototype.addParam = function(name, label, value, min, max, type) {
+  this.params[name] = {
+    'label': label,
+    'value': value,
+    'min': min,
+    'max': max,
+    'type': type
+  }
+}
+
+WSM.prototype.getParam = function(name) {
+  return this.params[name].value;
+}
 
 /*
  * WSM.Script
  */
 
-function WSM.Script(ctx, processAudio) {
+WSM.Script = function(ctx, processAudio) {
   WSM.call(this, ctx);
   var scriptProcessor = ctx.createScriptProcessor(4096, 1, 1);
   scriptProcessor.onaudioprocess = function(audioProcessingEvent) {
@@ -37,14 +50,14 @@ WSM.Script.prototype = Object.create(WSM.prototype)
  * WSM.Sample
  */
 
-function WSM.Sample(ctx, url) {  
+WSM.Sample = function(ctx, url) {
   WSM.call(this, ctx);
   this.input = null;
   this.loadSound(url);
 }
 WSM.Sample.prototype = Object.create(WSM.prototype)
  
-WSM.Sample.loadSound = function(url) { 
+WSM.Sample.prototype.loadSound = function(url) { 
   var that = this;
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
@@ -58,7 +71,7 @@ WSM.Sample.loadSound = function(url) {
   request.send();
 }
 
-WSM.Sample.play = function(ctx) {
+WSM.Sample.prototype.play = function(ctx) {
   var source = ctx.createBufferSource();
   source.buffer = this.buffer;
   source.connect(this.output);
