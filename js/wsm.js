@@ -54,11 +54,13 @@ WSM.Script.prototype = Object.create(WSM.prototype)
 WSM.Sample = function(ctx, url) {
   WSM.call(this, ctx);
   this.input = null;
+  this.buffer = null;
   this.loadSound(url);
 }
 WSM.Sample.prototype = Object.create(WSM.prototype)
  
 WSM.Sample.prototype.loadSound = function(url) { 
+  console.log("Loading sound: " + url);
   var that = this;
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
@@ -73,6 +75,7 @@ WSM.Sample.prototype.loadSound = function(url) {
 }
 
 WSM.Sample.prototype.play = function(ctx) {
+  console.log("Playing sound");
   var source = ctx.createBufferSource();
   source.buffer = this.buffer;
   source.connect(this.output);

@@ -8,14 +8,13 @@
 console.log('here');
 var ctx = new AudioContext();
 
-var sampler = new WSM.Sample(ctx, 'sounds/drums.ogg');
+//var sampler = new WSM.Sample(ctx, 'sounds/drums.ogg');
+
+var simpler = new Simpler(ctx);
 var fuzz = new Noisy(ctx);
-sampler.output.connect(fuzz.input);
+simpler.output.connect(fuzz.input);
 fuzz.output.connect(ctx.destination);
 
+simpler.draw($('.simpler'));
 fuzz.draw($('.noisy'));
 
-document.getElementById('play').onclick = function() {
-  console.log("clicked");
-  sampler.play(ctx);
-}

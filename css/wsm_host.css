@@ -2,3 +2,8 @@ body {
     background-color: #f9f9f9;
     font-family: 'Helvetica Neue', Helvetica, Arial;
 }
+
+.wsm-container {
+    float: left;
+    margin: 30px;
+}

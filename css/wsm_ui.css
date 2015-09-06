@@ -1,3 +1,12 @@
+.wsm-button {
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    overflow: hidden;
+    line-height: 200%;
+    text-align: center;
+}
+
 .wsm-container {
     border-radius: 2px;
     position: relative;
@@ -11,4 +20,8 @@
 
 .wsm-label {
     position: absolute;
+}
+
+.wsm-text-input {
+    position:absolute;
 }
